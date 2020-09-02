@@ -18,6 +18,8 @@ import argparse
 import keras.backend as K
 import sys
 
+
+# cnn architecture
 def cnn_model(model_name, img_size):
 	"""
 	Model definition using Xception net architecture
@@ -123,15 +125,8 @@ def main():
 	predictions = model.predict(x)
 	top_5 = predictions[0]
 	top_5 = top_5.argsort()[-5:][::-1]
-	# print(lb.inverse_transform(top_5)[0])
 	y_predictions = list()
-	# predict = lb.inverse_transform([np.argmax(predictions)])[0]
-	# predict = predict.split(".")[1]
-	# s = ''.join(predict.split("_"))
-	# y_predictions = list()
-	# # y_predictions.append(lb.inverse_transform([y_pred])[0])
-	# y_predictions.append(s)
-	# print(y_predictions)
+
 	for i in range(5):
 		predict = lb.inverse_transform(top_5)[i]
 		predict = predict.split(".")[1]
@@ -146,9 +141,7 @@ def main():
 	with open( "birds_class.txt", 'w') as f:
 		for i in range(5):
 			probab = 100*float(predictions[0][top_5[i]])
-			# f.write("%.3f:%s\n" % (probab, lb.inverse_transform(top_5)[i]))
 			f.write("%.3f:%s\n" % (probab, y_predictions[i]))
-			# f.write("%s\n" % lb.inverse_transform(top_5)[i])
 
 
 if __name__ == "__main__":
